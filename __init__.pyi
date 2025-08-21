@@ -11,7 +11,7 @@ from .graphics      import *
 from .histograms    import *
 from .io            import *
 from .tree          import *
-from .RDF           import RDataFrame
+from .dataframe     import *
 
 from . import RDF
 
