@@ -10,3 +10,9 @@ class RCompressionSetting:
         kLZ4 = 4
         kZSTD = 5
         kUndefined = 6
+    class EDefaults(IntEnum):
+        kUseGlobal = 0
+        kUseCompiledDefault = 1
+        kUseAnalysis = 2
+        kUseGeneralPurpose = 3
+        kUseSmallest = 4
