@@ -475,3 +475,133 @@ class TColor(TNamed):
         with rr, gg and bb in hex between [0,FF].
         """
         ...
+    
+    def SetPalette(self, ncolors : int, colors : int, alpha : float = 1) -> None:
+        """
+        The color palette is used by the histogram classes (see TH1.Draw options).
+        For example TH1.Draw("col") draws a 2-D histogram with cells represented by a box
+        filled with a color CI function of the cell content. if the cell content is N, the
+        color CI used will be the color number in colors[N],etc. If the maximum cell content
+        is > ncolors, all cell contents are scaled to ncolors.
+
+        if ncolors <= 0 a default palette (see below) of 50 colors is defined. The colors
+        defined in this palette are OK for coloring pads, labels.
+        ```
+        index 0->9   : grey colors from light to dark grey
+        index 10->19 : "brown" colors
+        index 20->29 : "blueish" colors
+        index 30->39 : "redish" colors
+        index 40->49 : basic colors
+        ```
+
+        if `ncolors == 1 & colors == 0`, a Rainbow Color map is created with 50 colors. It
+        is kept for backward compatibility. Better palettes like `kBird` are recommended.
+
+        High quality predefined palettes with 255 colors are available when `colors == 0`.
+        The following value of ncolors give access to:
+        ```
+        if ncolors = 51 and colors=0, a Deep Sea palette is used.
+        if ncolors = 52 and colors=0, a Grey Scale palette is used.
+        if ncolors = 53 and colors=0, a Dark Body Radiator palette is used.
+        if ncolors = 54 and colors=0, a Two-Color Hue palette is used.(dark blue through neutral gray to bright yellow)
+        if ncolors = 55 and colors=0, a Rain Bow palette is used.
+        if ncolors = 56 and colors=0, an Inverted Dark Body Radiator palette is used.
+        if ncolors = 57 and colors=0, a monotonically increasing L value palette is used.
+        if ncolors = 58 and colors=0, a Cubehelix palette is used
+                                        (Cf. Dave Green's "cubehelix" colour scheme at http://www.mrao.cam.ac.uk/~dag/CUBEHELIX/)
+        if ncolors = 59 and colors=0, a Green Red Violet palette is used.
+        if ncolors = 60 and colors=0, a Blue Red Yellow palette is used.
+        if ncolors = 61 and colors=0, an Ocean palette is used.
+        if ncolors = 62 and colors=0, a Color Printable On Grey palette is used.
+        if ncolors = 63 and colors=0, an Alpine palette is used.
+        if ncolors = 64 and colors=0, an Aquamarine palette is used.
+        if ncolors = 65 and colors=0, an Army palette is used.
+        if ncolors = 66 and colors=0, an Atlantic palette is used.
+        if ncolors = 67 and colors=0, an Aurora palette is used.
+        if ncolors = 68 and colors=0, an Avocado palette is used.
+        if ncolors = 69 and colors=0, a Beach palette is used.
+        if ncolors = 70 and colors=0, a Black Body palette is used.
+        if ncolors = 71 and colors=0, a Blue Green Yellow palette is used.
+        if ncolors = 72 and colors=0, a Brown Cyan palette is used.
+        if ncolors = 73 and colors=0, a CMYK palette is used.
+        if ncolors = 74 and colors=0, a Candy palette is used.
+        if ncolors = 75 and colors=0, a Cherry palette is used.
+        if ncolors = 76 and colors=0, a Coffee palette is used.
+        if ncolors = 77 and colors=0, a Dark Rain Bow palette is used.
+        if ncolors = 78 and colors=0, a Dark Terrain palette is used.
+        if ncolors = 79 and colors=0, a Fall palette is used.
+        if ncolors = 80 and colors=0, a Fruit Punch palette is used.
+        if ncolors = 81 and colors=0, a Fuchsia palette is used.
+        if ncolors = 82 and colors=0, a Grey Yellow palette is used.
+        if ncolors = 83 and colors=0, a Green Brown Terrain palette is used.
+        if ncolors = 84 and colors=0, a Green Pink palette is used.
+        if ncolors = 85 and colors=0, an Island palette is used.
+        if ncolors = 86 and colors=0, a Lake palette is used.
+        if ncolors = 87 and colors=0, a Light Temperature palette is used.
+        if ncolors = 88 and colors=0, a Light Terrain palette is used.
+        if ncolors = 89 and colors=0, a Mint palette is used.
+        if ncolors = 90 and colors=0, a Neon palette is used.
+        if ncolors = 91 and colors=0, a Pastel palette is used.
+        if ncolors = 92 and colors=0, a Pearl palette is used.
+        if ncolors = 93 and colors=0, a Pigeon palette is used.
+        if ncolors = 94 and colors=0, a Plum palette is used.
+        if ncolors = 95 and colors=0, a Red Blue palette is used.
+        if ncolors = 96 and colors=0, a Rose palette is used.
+        if ncolors = 97 and colors=0, a Rust palette is used.
+        if ncolors = 98 and colors=0, a Sandy Terrain palette is used.
+        if ncolors = 99 and colors=0, a Sienna palette is used.
+        if ncolors = 100 and colors=0, a Solar palette is used.
+        if ncolors = 101 and colors=0, a South West palette is used.
+        if ncolors = 102 and colors=0, a Starry Night palette is used.
+        if ncolors = 103 and colors=0, a Sunset palette is used.
+        if ncolors = 104 and colors=0, a Temperature Map palette is used.
+        if ncolors = 105 and colors=0, a Thermometer palette is used.
+        if ncolors = 106 and colors=0, a Valentine palette is used.
+        if ncolors = 107 and colors=0, a Visible Spectrum palette is used.
+        if ncolors = 108 and colors=0, a Water Melon palette is used.
+        if ncolors = 109 and colors=0, a Cool palette is used.
+        if ncolors = 110 and colors=0, a Copper palette is used.
+        if ncolors = 111 and colors=0, a Gist Earth palette is used.
+        if ncolors = 112 and colors=0, a Viridis palette is used.
+        if ncolors = 113 and colors=0, a Cividis palette is used.
+        ```
+        These palettes can also be accessed by names:
+        ```
+        kDeepSea=51,          kGreyScale=52,    kDarkBodyRadiator=53,
+        kBlueYellow= 54,      kRainBow=55,      kInvertedDarkBodyRadiator=56,
+        kBird=57,             kCubehelix=58,    kGreenRedViolet=59,
+        kBlueRedYellow=60,    kOcean=61,        kColorPrintableOnGrey=62,
+        kAlpine=63,           kAquamarine=64,   kArmy=65,
+        kAtlantic=66,         kAurora=67,       kAvocado=68,
+        kBeach=69,            kBlackBody=70,    kBlueGreenYellow=71,
+        kBrownCyan=72,        kCMYK=73,         kCandy=74,
+        kCherry=75,           kCoffee=76,       kDarkRainBow=77,
+        kDarkTerrain=78,      kFall=79,         kFruitPunch=80,
+        kFuchsia=81,          kGreyYellow=82,   kGreenBrownTerrain=83,
+        kGreenPink=84,        kIsland=85,       kLake=86,
+        kLightTemperature=87, kLightTerrain=88, kMint=89,
+        kNeon=90,             kPastel=91,       kPearl=92,
+        kPigeon=93,           kPlum=94,         kRedBlue=95,
+        kRose=96,             kRust=97,         kSandyTerrain=98,
+        kSienna=99,           kSolar=100,       kSouthWest=101,
+        kStarryNight=102,     kSunset=103,      kTemperatureMap=104,
+        kThermometer=105,     kValentine=106,   kVisibleSpectrum=107,
+        kWaterMelon=108,      kCool=109,        kCopper=110,
+        kGistEarth=111        kViridis=112,     kCividis=113
+        ```
+        
+        For example:
+        ```
+        ROOT.gStyle.SetPalette(ROOT.kBird);
+        ```
+        Set the current palette as "Bird" (number 57).
+
+        The color numbers specified in the palette can be viewed by selecting the
+        item "colors" in the "VIEW" menu of the canvas toolbar. The color parameters can
+        be changed via TColor.SetRGB.
+
+        Note that when drawing a 2D histogram h2 with the option "COL" or "COLZ" or with
+        any "CONT" options using the color map, the number of colors used is defined by the
+        number of contours n specified with: `h2.SetContour(n)`
+        """
+        pass
